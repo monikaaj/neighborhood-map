@@ -1,11 +1,15 @@
 import React, { Component } from "react";
 import Sidebar from "react-sidebar";
 import { Button, Glyphicon } from "react-bootstrap";
+import scriptLoader from 'react-async-script-loader'
 import "./App.css";
+import Map from "./components/Map";
 
 const mql = window.matchMedia(`(min-width: 800px)`);
+let map = {};
 
 class App extends Component {
+  
   state = {
     sidebarDocked: mql.matches,
     sidebarOpen: true
@@ -30,6 +34,16 @@ class App extends Component {
     this.setState({ sidebarDocked: mql.matches, sidebarOpen: false });
   }
 
+  componentWillReceiveProps({ isScriptLoadSucceed }) {
+    if(isScriptLoadSucceed) {
+      map = new window.google.maps.Map(document.getElementById('map'), {
+        center: {lat: 40.7413549, lng: -73.9980244},
+        zoom: 13,
+        mapTypeControl: false
+      });
+    }
+  }
+
   render() {
     return (
       <div className="app">
@@ -45,9 +59,12 @@ class App extends Component {
           <Glyphicon glyph="align-justify" />
         </Button>
         </Sidebar>
+        <Map />
       </div>
     );
   }
 }
 
-export default App;
+export default scriptLoader(
+  ['https://maps.googleapis.com/maps/api/js?key=AIzaSyD4jvFejxbYtA2gfrAh5RYRG_NO8qzm97Q']
+)(App)

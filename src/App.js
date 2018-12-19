@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Sidebar from "react-sidebar";
+import { Button, Glyphicon } from "react-bootstrap";
 import "./App.css";
 
 const mql = window.matchMedia(`(min-width: 800px)`);
@@ -33,15 +34,16 @@ class App extends Component {
     return (
       <div className="app">
         <Sidebar
-          sidebar={<b>Sidebar content</b>}
+          sidebar={<p>Sidebar content</p>}
           open={this.state.sidebarOpen}
           onSetOpen={this.onSetSidebarOpen}
           docked={this.state.sidebarDocked}
-          styles={{ sidebar: { background: "white" } }}
+          sidebarClassName={'sidebar'}
+          styles={{ sidebar: { background: "#1e2129" } }}
         >
-          <button onClick={() => this.onSetSidebarOpen(true)}>
-            Open sidebar
-          </button>
+        <Button className="sidebar-button" onClick={() => this.onSetSidebarOpen(true)}>
+          <Glyphicon glyph="align-justify" />
+        </Button>
         </Sidebar>
       </div>
     );

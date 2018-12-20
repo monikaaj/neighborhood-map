@@ -9,12 +9,14 @@ import { locations } from "./locations";
 
 const mql = window.matchMedia(`(min-width: 800px)`);
 let map = {};
+let markersArray = [];
 
 class App extends Component {
   
   state = {
     sidebarDocked: mql.matches,
-    sidebarOpen: true
+    sidebarOpen: true,
+    markers: []
   };
 
   mediaQueryChanged = this.mediaQueryChanged.bind(this);
@@ -43,6 +45,9 @@ class App extends Component {
     if(isScriptLoadSucceed) {
       this.createMap();
       this.addMarkers();
+      this.setState({
+        markers: markersArray
+      })
     }
   }
 
@@ -64,6 +69,8 @@ class App extends Component {
         id: i
       });
       this.addInfoWindow(marker);
+      markersArray.push(marker);
+      console.log(markersArray)
     }
   }
 
@@ -85,7 +92,9 @@ class App extends Component {
       <div className="app">
         <Sidebar
           sidebar={
-            <Search />
+            <Search 
+              markers={ this.state.markers }
+            />
           }
           open={this.state.sidebarOpen}
           onSetOpen={this.onSetSidebarOpen}

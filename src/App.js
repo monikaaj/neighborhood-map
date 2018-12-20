@@ -63,7 +63,17 @@ class App extends Component {
         animation: window.google.maps.Animation.DROP,
         id: i
       });
+      this.addInfoWindow(marker);
     }
+  }
+
+  addInfoWindow(marker) {
+    var infowindow = new window.google.maps.InfoWindow({
+      content: "InfoWindow content"
+    });
+    marker.addListener('click', function() {
+      infowindow.open(map, marker);
+    });
   }
 
   render() {

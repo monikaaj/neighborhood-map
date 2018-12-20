@@ -19,6 +19,9 @@ class App extends Component {
   onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
 
   componentWillMount() {
+    if (window.innerWidth < 800) {
+      this.mediaQueryChanged();
+    }
     mql.addListener(this.mediaQueryChanged);
   }
  

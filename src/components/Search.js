@@ -5,26 +5,38 @@ import { locations } from '../locations';
 
 class Search extends Component {
   state = {
-    markers: []
+    markers: this.props.markers
   }
 
   componentWillMount() {
-    this.setState({
-      markers: this.props.markers
-    })
+    setTimeout(() => {
+      this.setState({
+        markers: this.props.markers
+      })
+    }, 1000);
   }
 
   render() {
-    console.log(this.props);
-    console.log(this.state.markers)
+    console.log(this.state)
+    console.log(this.props)
+    const { markers } = this.state;
     return (
-      <div className="search-locations-bar">
-        <div className="search-locations-input-wrapper">
-          <Debounce time='1000' handler="onChange">
-            <input type="text" placeholder="Search location"
-            onChange={(event) => this.updateQuery(event.target.value)}
-            />
-          </Debounce>
+      <div>
+        <div className="search-locations-bar">
+          <div className="search-locations-input-wrapper">
+            <Debounce time='1000' handler="onChange">
+              <input type="text" placeholder="Search location"
+              onChange={(event) => this.updateQuery(event.target.value)}
+              />
+            </Debounce>
+          </div>
+        </div>
+        <div className="search-results">
+          {markers.map((marker) => (
+            <li key={marker.id} className="search-item">
+              {marker.title}
+            </li>
+          ))}
         </div>
       </div>
     );

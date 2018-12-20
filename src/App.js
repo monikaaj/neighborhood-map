@@ -73,6 +73,9 @@ class App extends Component {
     });
     marker.addListener('click', function() {
       this.setAnimation(window.google.maps.Animation.BOUNCE);
+      setTimeout(() => {
+        marker.setAnimation(null);
+      }, 2000);
       infowindow.open(map, marker);
     });
   }

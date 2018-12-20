@@ -51,6 +51,10 @@ class App extends Component {
     }
   }
 
+  getUpdatedMarkers(updatedMarkers) {
+    console.log(updatedMarkers);
+  }
+
   createMap() {
     map = new window.google.maps.Map(document.getElementById('map'), {
       center: {lat: 50.061527, lng: 19.937959},
@@ -66,11 +70,10 @@ class App extends Component {
         map: map,
         title: locations[i].title,
         animation: window.google.maps.Animation.DROP,
-        id: i
+        venueId: locations[i].venueId
       });
       this.addInfoWindow(marker);
       markersArray.push(marker);
-      console.log(markersArray)
     }
   }
 

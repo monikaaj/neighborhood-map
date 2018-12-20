@@ -7,7 +7,8 @@ import { locations } from '../locations';
 class Search extends Component {
   state = {
     query: '',
-    markers: this.props.markers
+    markers: this.props.markers,
+    showingLocations: []
   }
 
   componentWillMount() {
@@ -19,7 +20,6 @@ class Search extends Component {
   }
 
   updateQuery = (query) => {
-    console.log(query)
     this.setState({ query: query.trim() })
   }
 
@@ -27,36 +27,43 @@ class Search extends Component {
     this.setState({ query: '' })
   }
 
-  render() {
-    console.log(this.state)
-    console.log(this.props)
-    const { markers, query } = this.state;
+  updateMarkers(showingLocations) {
+    setTimeout(() => {
+      this.setState({
+        markers: showingLocations
+      })
+    }, 1000);
+  }
 
-    let showingLocations
+  render() {
+    let { query, markers, showingLocations } = this.state;
+
     if (query) {
       const match = new RegExp(escapeRegExp(query), 'i');
-      showingLocations = markers.filter((location) => match.test(location.title))
+      showingLocations = markers.filter((location) => match.test(location.title));
+      this.updateMarkers(showingLocations);
     }
     else {
-      showingLocations = markers;
+      showingLocations = locations;
     }
+    
     return (
       <div>
         <div className="search-locations-bar">
           <div className="search-locations-input-wrapper">
             <Debounce time='1000' handler="onChange">
               <input
-                type="text"
-                placeholder="Search location"
-                onChange={(event) => this.updateQuery(event.target.value)}
+                type = "text"
+                placeholder = "Search location"
+                onChange = {(event) => this.updateQuery(event.target.value)}
               />
             </Debounce>
           </div>
         </div>
         <div className="search-results">
           {showingLocations.map((marker) => (
-            <li key={marker.id} className="search-item">
-              {marker.title}
+            <li key={marker.venueId} className="search-item">
+              <span className="search-item">{marker.title}</span>
             </li>
           ))}
         </div>

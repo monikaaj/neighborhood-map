@@ -5,6 +5,7 @@ import scriptLoader from 'react-async-script-loader'
 import "./App.css";
 import Map from "./components/Map";
 import Search from "./components/Search";
+import { locations } from "./locations";
 
 const mql = window.matchMedia(`(min-width: 800px)`);
 let map = {};
@@ -40,10 +41,27 @@ class App extends Component {
 
   componentWillReceiveProps({ isScriptLoadSucceed }) {
     if(isScriptLoadSucceed) {
-      map = new window.google.maps.Map(document.getElementById('map'), {
-        center: {lat: 40.7413549, lng: -73.9980244},
-        zoom: 13,
-        mapTypeControl: false
+      this.createMap();
+      this.addMarkers();
+    }
+  }
+
+  createMap() {
+    map = new window.google.maps.Map(document.getElementById('map'), {
+      center: {lat: 50.061527, lng: 19.937959},
+      zoom: 13,
+      mapTypeControl: false
+    });
+  }
+
+  addMarkers() {
+    for (let i = 0; i < locations.length; i++) {
+      var marker = new window.google.maps.Marker({
+        position: locations[i].location,
+        map: map,
+        title: locations[i].title,
+        animation: window.google.maps.Animation.DROP,
+        id: i
       });
     }
   }

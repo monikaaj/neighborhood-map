@@ -1,4 +1,4 @@
-const locations = [
+export  const locations = [
     {
         title: "Rynek Główny",
         location: {

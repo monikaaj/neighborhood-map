@@ -48,6 +48,7 @@ class App extends Component {
       this.setState({
         markers: markersArray
       })
+      console.log(this.state.markers)
     }
   }
 
@@ -96,6 +97,23 @@ class App extends Component {
       }, 900);
       infowindow.open(map, marker);
     });
+    this.getInfoWindowData(marker)
+  }
+
+  getInfoWindowData(marker) {
+    /*fetch(`https://api.foursquare.com/v2/venues/${marker.venueId}` +
+          `?client_id=CKNFO3V2Y12VDYZIIKOBW4ZJGL1H515OIDTJUS3HNAD5LSVQ` +
+          `&client_secret=LQSLIUGCUU2NT32QN3SR4NWCKM40IA4GN5BOJF1YYHPFRJLI` +
+          `&v=20180323`)
+          .then(response => response.json())
+          .then(data => {
+            if (data.meta.code === 200) {
+              marker.venueDetails = data;
+            }
+          }).catch(error => {
+            console.log(error);
+          }) */
+          console.log(marker);
   }
 
   updateMarkers(updatedMarkers) {

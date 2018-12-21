@@ -30,7 +30,6 @@ class Search extends Component {
 
   updateMarkers() {
     let { query, markers, showingLocations } = this.state;
-    console.log(query);
     const match = new RegExp(escapeRegExp(query), 'i');
     showingLocations = locations.filter((location) => match.test(location.title));
     setTimeout(() => {

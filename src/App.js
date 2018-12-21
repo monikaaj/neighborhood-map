@@ -43,6 +43,7 @@ class App extends Component {
 
   componentWillReceiveProps({ isScriptLoadSucceed }) {
     if(isScriptLoadSucceed) {
+      this.getInfoWindowsData();
       this.createMap();
       this.addMarkers();
       this.setState({
@@ -58,6 +59,34 @@ class App extends Component {
       zoom: 13,
       mapTypeControl: false
     });
+  }
+
+  // gets all locations data from foursquare
+  getInfoWindowsData() {
+    locations.forEach((location) => {
+      /* fetch(`https://api.foursquare.com/v2/venues/${location.venueId}` +
+          `?client_id=CKNFO3V2Y12VDYZIIKOBW4ZJGL1H515OIDTJUS3HNAD5LSVQ` +
+          `&client_secret=LQSLIUGCUU2NT32QN3SR4NWCKM40IA4GN5BOJF1YYHPFRJLI` +
+          `&v=20180323`)
+          .then(response => response.json())
+          .then(data => {
+            if (data.meta.code === 200) {
+              location.venueDetails = data;
+            }
+          }).catch(error => {
+            console.log(error);
+          }) */
+
+        var data = {
+          bestPhoto: "https://fastly.4sqi.net/img/general/200x200/23102890_bEDjmUmZ4VxWisrwobQ_KrV-txoGa1awGtOcKAIhCDI.jpg",
+          rating: 5,
+          likes: 300,
+          tips: "place tips",
+          moreInfo: "https://pl.wikipedia.org/wiki/Rynek_G%C5%82%C3%B3wny_w_Krakowie"
+        }
+        location.venueDetails = data;
+        console.log(location)
+    })
   }
 
   addMarkers() {
@@ -79,7 +108,8 @@ class App extends Component {
         map: map,
         title: locations[i].title,
         animation: window.google.maps.Animation.DROP,
-        venueId: locations[i].venueId
+        venueId: locations[i].venueId,
+        venueDetails: locations[i].venueDetails
       });
       this.addInfoWindow(marker);
       markersArray.push(marker);
@@ -87,8 +117,16 @@ class App extends Component {
   }
 
   addInfoWindow(marker) {
+    const infowindowContent = `<div>
+      <h4>${marker.title}</h4>
+      <img src=${marker.venueDetails.bestPhoto} width="300" />
+      <p>${marker.venueDetails.rating}</p>
+      <p>${marker.venueDetails.likes}</p>
+      <p>${marker.venueDetails.tips}</p>
+      <a href="${marker.venueDetails.moreInfo}" target="_blank">More details</a>
+    </div>`
     var infowindow = new window.google.maps.InfoWindow({
-      content: marker.title
+      content: infowindowContent
     });
     marker.addListener('click', function() {
       this.setAnimation(window.google.maps.Animation.BOUNCE);
@@ -97,23 +135,6 @@ class App extends Component {
       }, 900);
       infowindow.open(map, marker);
     });
-    this.getInfoWindowData(marker)
-  }
-
-  getInfoWindowData(marker) {
-    /*fetch(`https://api.foursquare.com/v2/venues/${marker.venueId}` +
-          `?client_id=CKNFO3V2Y12VDYZIIKOBW4ZJGL1H515OIDTJUS3HNAD5LSVQ` +
-          `&client_secret=LQSLIUGCUU2NT32QN3SR4NWCKM40IA4GN5BOJF1YYHPFRJLI` +
-          `&v=20180323`)
-          .then(response => response.json())
-          .then(data => {
-            if (data.meta.code === 200) {
-              marker.venueDetails = data;
-            }
-          }).catch(error => {
-            console.log(error);
-          }) */
-          console.log(marker);
   }
 
   updateMarkers(updatedMarkers) {

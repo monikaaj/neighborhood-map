@@ -87,13 +87,13 @@ class App extends Component {
 
   addInfoWindow(marker) {
     var infowindow = new window.google.maps.InfoWindow({
-      content: "InfoWindow content"
+      content: marker.title
     });
     marker.addListener('click', function() {
       this.setAnimation(window.google.maps.Animation.BOUNCE);
       setTimeout(() => {
         marker.setAnimation(null);
-      }, 2000);
+      }, 900);
       infowindow.open(map, marker);
     });
   }

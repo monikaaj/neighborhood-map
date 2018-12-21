@@ -51,10 +51,6 @@ class App extends Component {
     }
   }
 
-  getUpdatedMarkers(updatedMarkers) {
-    console.log(updatedMarkers);
-  }
-
   createMap() {
     map = new window.google.maps.Map(document.getElementById('map'), {
       center: {lat: 50.061527, lng: 19.937959},
@@ -64,16 +60,34 @@ class App extends Component {
   }
 
   addMarkers() {
-    for (let i = 0; i < locations.length; i++) {
-      var marker = new window.google.maps.Marker({
-        position: locations[i].location,
-        map: map,
-        title: locations[i].title,
-        animation: window.google.maps.Animation.DROP,
-        venueId: locations[i].venueId
-      });
-      this.addInfoWindow(marker);
-      markersArray.push(marker);
+    if (this.state.markers.length > 0) {
+      markersArray.forEach((marker) => {
+        marker.setMap(null);
+      })
+      for (let i = 0; i < this.state.markers.length; i++) {
+        var marker = new window.google.maps.Marker({
+          position: locations[i].location,
+          map: map,
+          title: locations[i].title,
+          animation: window.google.maps.Animation.DROP,
+          venueId: locations[i].venueId
+        });
+        this.addInfoWindow(marker);
+        markersArray.push(marker);
+      }
+    }
+    else {
+      for (let i = 0; i < locations.length; i++) {
+        var marker = new window.google.maps.Marker({
+          position: locations[i].location,
+          map: map,
+          title: locations[i].title,
+          animation: window.google.maps.Animation.DROP,
+          venueId: locations[i].venueId
+        });
+        this.addInfoWindow(marker);
+        markersArray.push(marker);
+      }
     }
   }
 
@@ -91,11 +105,10 @@ class App extends Component {
   }
 
   updateMarkers(updatedMarkers) {
-    console.log(updatedMarkers)
     this.setState(state => ({
       markers: updatedMarkers
     }))
-    console.log(this.state.markers)
+    this.addMarkers()
   }
 
   render() {

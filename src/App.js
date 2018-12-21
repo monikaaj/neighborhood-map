@@ -64,30 +64,24 @@ class App extends Component {
       markersArray.forEach((marker) => {
         marker.setMap(null);
       })
-      for (let i = 0; i < this.state.markers.length; i++) {
-        var marker = new window.google.maps.Marker({
-          position: locations[i].location,
-          map: map,
-          title: locations[i].title,
-          animation: window.google.maps.Animation.DROP,
-          venueId: locations[i].venueId
-        });
-        this.addInfoWindow(marker);
-        markersArray.push(marker);
-      }
+      this.createMarkers(this.state.markers);
     }
     else {
-      for (let i = 0; i < locations.length; i++) {
-        var marker = new window.google.maps.Marker({
-          position: locations[i].location,
-          map: map,
-          title: locations[i].title,
-          animation: window.google.maps.Animation.DROP,
-          venueId: locations[i].venueId
-        });
-        this.addInfoWindow(marker);
-        markersArray.push(marker);
-      }
+      this.createMarkers(locations);
+    }
+  }
+
+  createMarkers(markersToCreate) {
+    for (let i = 0; i < markersToCreate.length; i++) {
+      var marker = new window.google.maps.Marker({
+        position: locations[i].location,
+        map: map,
+        title: locations[i].title,
+        animation: window.google.maps.Animation.DROP,
+        venueId: locations[i].venueId
+      });
+      this.addInfoWindow(marker);
+      markersArray.push(marker);
     }
   }
 

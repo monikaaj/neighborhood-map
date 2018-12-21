@@ -90,6 +90,14 @@ class App extends Component {
     });
   }
 
+  updateMarkers(updatedMarkers) {
+    console.log(updatedMarkers)
+    this.setState(state => ({
+      markers: updatedMarkers
+    }))
+    console.log(this.state.markers)
+  }
+
   render() {
     return (
       <div className="app">
@@ -97,6 +105,9 @@ class App extends Component {
           sidebar={
             <Search 
               markers={ this.state.markers }
+              onUpdateMarkers = {(updatedMarkers) => {
+                this.updateMarkers(updatedMarkers)
+              }}
             />
           }
           open={this.state.sidebarOpen}

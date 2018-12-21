@@ -21,18 +21,25 @@ class Search extends Component {
 
   updateQuery = (query) => {
     this.setState({ query: query.trim() })
+    this.updateMarkers();
   }
 
   clearQuery = () => {
     this.setState({ query: '' })
   }
 
-  updateMarkers(showingLocations) {
+  updateMarkers() {
+    let { query, markers, showingLocations } = this.state;
+    console.log(query);
+    const match = new RegExp(escapeRegExp(query), 'i');
+    showingLocations = locations.filter((location) => match.test(location.title));
     setTimeout(() => {
       this.setState({
         markers: showingLocations
       })
     }, 1000);
+    if (this.props.onUpdateMarkers)
+      this.props.onUpdateMarkers(showingLocations)
   }
 
   render() {
@@ -40,8 +47,7 @@ class Search extends Component {
 
     if (query) {
       const match = new RegExp(escapeRegExp(query), 'i');
-      showingLocations = markers.filter((location) => match.test(location.title));
-      this.updateMarkers(showingLocations);
+      showingLocations = locations.filter((location) => match.test(location.title));
     }
     else {
       showingLocations = locations;

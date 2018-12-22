@@ -41,6 +41,17 @@ class Search extends Component {
       this.props.onUpdateMarkers(showingLocations)
   }
 
+  onChooseLocation(marker) {
+    let showingLocations = locations.filter((location) => marker.title === location.title);
+    setTimeout(() => {
+      this.setState({
+        markers: showingLocations
+      })
+    }, 1000);
+    if (this.props.onUpdateMarkers)
+      this.props.onUpdateMarkers(showingLocations)
+  }
+
   render() {
     let { query, markers, showingLocations } = this.state;
 
@@ -68,7 +79,11 @@ class Search extends Component {
         <div className="search-results">
           {showingLocations.map((marker) => (
             <li key={marker.venueId} className="search-item">
-              <span className="search-item">{marker.title}</span>
+              <p 
+                className="search-item"
+                onClick = {() => this.onChooseLocation(marker.title)}>
+                {marker.title}
+              </p>
             </li>
           ))}
         </div>

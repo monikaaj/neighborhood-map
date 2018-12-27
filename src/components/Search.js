@@ -2,65 +2,58 @@ import React, { Component } from 'react';
 import './Search.css';
 import { Debounce } from 'react-throttle';
 import escapeRegExp from 'escape-string-regexp';
-import { locations } from '../locations';
+import { locationsData } from '../locationsData';
 
 class Search extends Component {
   state = {
     query: '',
-    markers: this.props.markers,
-    showingLocations: []
-  }
-
-  componentWillMount() {
-    setTimeout(() => {
-      this.setState({
-        markers: this.props.markers
-      })
-    }, 1000);
+    locations: this.props.locations
   }
 
   updateQuery = (query) => {
     this.setState({ query: query.trim() })
-    this.updateMarkers();
+    this.updateLocations();
   }
 
   clearQuery = () => {
     this.setState({ query: '' })
   }
 
-  updateMarkers() {
-    let { query, markers, showingLocations } = this.state;
+  updateLocations() {
+    let { query, locations, showingLocations } = this.state;
     const match = new RegExp(escapeRegExp(query), 'i');
     showingLocations = locations.filter((location) => match.test(location.title));
     setTimeout(() => {
       this.setState({
-        markers: showingLocations
+        locations: showingLocations
       })
     }, 1000);
-    if (this.props.onUpdateMarkers)
-      this.props.onUpdateMarkers(showingLocations)
+    if (this.props.onUpdateLocations)
+      this.props.onUpdateLocations(showingLocations)
   }
 
   onChooseLocation(marker) {
-    let showingLocations = locations.filter((location) => marker.title === location.title);
+    let showingLocations = locationsData.filter((location) => marker.title === location.title);
     setTimeout(() => {
       this.setState({
-        markers: showingLocations
+        locations: showingLocations
       })
     }, 1000);
-    if (this.props.onUpdateMarkers)
-      this.props.onUpdateMarkers(showingLocations)
+    if (this.props.onUpdateLocations)
+      this.props.onUpdateLocations(showingLocations)
   }
 
   render() {
-    let { query, markers, showingLocations } = this.state;
+    let { query, locations } = this.state;
+
+    let showingLocations = [];
 
     if (query) {
       const match = new RegExp(escapeRegExp(query), 'i');
-      showingLocations = locations.filter((location) => match.test(location.title));
+      showingLocations = locationsData.filter((location) => match.test(location.title));
     }
     else {
-      showingLocations = locations;
+      showingLocations = locationsData;
     }
     
     return (

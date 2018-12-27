@@ -5,7 +5,7 @@ import scriptLoader from 'react-async-script-loader'
 import "./App.css";
 import Map from "./components/Map";
 import Search from "./components/Search";
-import { locations } from "./locations";
+import { locationsData } from "./locations";
 
 const mql = window.matchMedia(`(min-width: 800px)`);
 let map = {};
@@ -16,7 +16,8 @@ class App extends Component {
   state = {
     sidebarDocked: mql.matches,
     sidebarOpen: true,
-    markers: []
+    markers: [],
+    locations: []
   };
 
   mediaQueryChanged = this.mediaQueryChanged.bind(this);
@@ -62,7 +63,7 @@ class App extends Component {
 
   // gets all locations data from foursquare
   getInfoWindowsData() {
-    locations.forEach((location) => {
+    locationsData.forEach((location) => {
        /*fetch(`https://api.foursquare.com/v2/venues/${location.venueId}` +
           `?client_id=CKNFO3V2Y12VDYZIIKOBW4ZJGL1H515OIDTJUS3HNAD5LSVQ` +
           `&client_secret=LQSLIUGCUU2NT32QN3SR4NWCKM40IA4GN5BOJF1YYHPFRJLI` +
@@ -81,24 +82,31 @@ class App extends Component {
           data = JSON.parse(data);
 
         location.venueDetails = data.response;
-        console.log(location);
     })
   }
 
   addMarkers() {
+    console.log(markersArray);
     if (this.state.markers.length > 0) {
-      markersArray.forEach((marker) => {
+      this.state.markers.forEach((marker) => {
         marker.setMap(null);
       })
-      this.createMarkers(this.state.markers);
+      this.setState({
+        markers: []
+      })
+      if(this.state.locations.length > 0) {
+        this.createMarkers(this.state.locations);
+      }
+      else {
+        this.createMarkers(locationsData);
+      }
     }
     else {
-      this.createMarkers(locations);
+      this.createMarkers(locationsData);
     }
   }
 
   createMarkers(markersToCreate) {
-    console.log(markersToCreate)
     for (let i = 0; i < markersToCreate.length; i++) {
       var marker = new window.google.maps.Marker({
         position: markersToCreate[i].location,
@@ -111,6 +119,9 @@ class App extends Component {
       this.addInfoWindow(marker);
       markersArray.push(marker);
     }
+    this.setState({
+      markers: markersArray
+    })
   }
 
   addInfoWindow(marker) {
@@ -134,11 +145,11 @@ class App extends Component {
     });
   }
 
-  updateMarkers(updatedMarkers) {
-    this.setState(state => ({
-      markers: updatedMarkers
-    }))
-    this.addMarkers()
+  updateLocations(updatedLocations) {
+    this.setState({
+      locations: updatedLocations
+    })
+    this.addMarkers();
   }
 
   render() {
@@ -147,9 +158,9 @@ class App extends Component {
         <Sidebar
           sidebar={
             <Search 
-              markers={ this.state.markers }
-              onUpdateMarkers = {(updatedMarkers) => {
-                this.updateMarkers(updatedMarkers)
+              locations={ this.state.locations }
+              onUpdateLocations = {(updatedLocations) => {
+                this.updateLocations(updatedLocations)
               }}
             />
           }

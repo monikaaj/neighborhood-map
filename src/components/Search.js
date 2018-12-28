@@ -86,6 +86,9 @@ class Search extends Component {
             </li>
           ))}
         </div>
+        <div class="button-wrapper">
+          <button type="button" class="btn btn-primary all-locations-button">Show all locations</button>
+        </div>
       </div>
     );
   }

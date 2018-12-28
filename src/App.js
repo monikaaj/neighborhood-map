@@ -135,7 +135,7 @@ class App extends Component {
   }
 
   addInfoWindow(marker) {
-    console.log(marker)
+    // add info window content
     const infowindowContent = `<div>
       <h4>${marker.title}</h4>
       <p>${marker.venueDetails.venue.location.city}, ${marker.venueDetails.venue.location.state}, ${marker.venueDetails.venue.location.country}</p>
@@ -153,6 +153,7 @@ class App extends Component {
         marker.setAnimation(null);
       }, 900);
       infowindow.open(map, marker);
+      setTimeout(function () { infowindow.close(); }, 5000);
     });
   }
 

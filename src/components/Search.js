@@ -15,7 +15,9 @@ class Search extends Component {
   }
 
   clearQuery = () => {
-    this.setState({ query: '' })
+    this.setState({ query: '' }, () => {
+      this.updateLocations()
+    })
   }
 
   updateLocations() {
@@ -27,8 +29,9 @@ class Search extends Component {
         locations: showingLocations
       })
     }, 1000);
-    if (this.props.onUpdateLocations)
+    if (this.props.onUpdateLocations) {
       this.props.onUpdateLocations(showingLocations)
+    }
   }
 
   onChooseLocation(marker) {
@@ -54,11 +57,12 @@ class Search extends Component {
 
     let showingLocations = [];
 
-    if (query) {
+    if (query.length > 0) {
       const match = new RegExp(escapeRegExp(query), 'i');
       showingLocations = this.props.allLocations.filter((location) => match.test(location.title));
     }
     else {
+      console.log(this.props.allLocations)
       showingLocations = this.props.allLocations;
     }
     
@@ -86,8 +90,13 @@ class Search extends Component {
             </li>
           ))}
         </div>
-        <div class="button-wrapper">
-          <button type="button" class="btn btn-primary all-locations-button">Show all locations</button>
+        <div className="button-wrapper">
+          <button
+            type="button"
+            className="btn btn-primary all-locations-button"
+            onClick= {() => this.clearQuery()}>
+              Show all locations
+          </button>
         </div>
       </div>
     );

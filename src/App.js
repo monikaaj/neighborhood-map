@@ -107,6 +107,7 @@ class App extends Component {
   }
 
   createMarkers(markersToCreate) {
+    markersArray = [];
     for (let i = 0; i < markersToCreate.length; i++) {
       var marker = new window.google.maps.Marker({
         position: markersToCreate[i].location,
@@ -149,6 +150,7 @@ class App extends Component {
     this.setState({
       locations: updatedLocations
     })
+    console.log(this.state.locations);
     this.addMarkers();
   }
 

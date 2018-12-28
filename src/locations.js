@@ -1,4 +1,4 @@
-export  const locations = [
+export  const locationsData = [
     {
         title: "Rynek Główny",
         location: {

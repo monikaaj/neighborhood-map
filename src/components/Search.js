@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './Search.css';
 import { Debounce } from 'react-throttle';
 import escapeRegExp from 'escape-string-regexp';
-import { locationsData } from '../locationsData';
 
 class Search extends Component {
   state = {
@@ -20,9 +19,9 @@ class Search extends Component {
   }
 
   updateLocations() {
-    let { query, locations, showingLocations } = this.state;
+    let { query, showingLocations } = this.state;
     const match = new RegExp(escapeRegExp(query), 'i');
-    showingLocations = locations.filter((location) => match.test(location.title));
+    showingLocations = this.props.allLocations.filter((location) => match.test(location.title));
     setTimeout(() => {
       this.setState({
         locations: showingLocations
@@ -33,7 +32,7 @@ class Search extends Component {
   }
 
   onChooseLocation(marker) {
-    let showingLocations = locationsData.filter((location) => marker.title === location.title);
+    let showingLocations = this.props.allLocations.filter((location) => marker.title === location.title);
     setTimeout(() => {
       this.setState({
         locations: showingLocations
@@ -50,10 +49,10 @@ class Search extends Component {
 
     if (query) {
       const match = new RegExp(escapeRegExp(query), 'i');
-      showingLocations = locationsData.filter((location) => match.test(location.title));
+      showingLocations = this.props.allLocations.filter((location) => match.test(location.title));
     }
     else {
-      showingLocations = locationsData;
+      showingLocations = this.props.allLocations;
     }
     
     return (

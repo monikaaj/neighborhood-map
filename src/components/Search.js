@@ -38,12 +38,19 @@ class Search extends Component {
         locations: showingLocations
       })
     }, 1000);
-    if (this.props.onUpdateLocations)
+    if (this.props.onUpdateLocations) {
       this.props.onUpdateLocations(showingLocations)
+    }
+  }
+
+  onClickLocation(location) {
+    this.setState({ query: location.title }, () => {
+      this.props.onUpdateLocations([location])
+    })
   }
 
   render() {
-    let { query, locations } = this.state;
+    let { query } = this.state;
 
     let showingLocations = [];
 
@@ -73,7 +80,7 @@ class Search extends Component {
             <li key={location.venueId} className="search-item">
               <p 
                 className="search-item"
-                onClick = {() => this.props.onUpdateLocations([location])}>
+                onClick = {() => this.onClickLocation(location)}>
                 {location.title}
               </p>
             </li>

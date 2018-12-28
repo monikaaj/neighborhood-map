@@ -69,12 +69,12 @@ class Search extends Component {
           </div>
         </div>
         <div className="search-results">
-          {showingLocations.map((marker) => (
-            <li key={marker.venueId} className="search-item">
+          {showingLocations.map((location) => (
+            <li key={location.venueId} className="search-item">
               <p 
                 className="search-item"
-                onClick = {() => this.onChooseLocation(marker.title)}>
-                {marker.title}
+                onClick = {() => this.props.onUpdateLocations([location])}>
+                {location.title}
               </p>
             </li>
           ))}

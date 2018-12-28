@@ -84,9 +84,7 @@ class App extends Component {
     })
     this.setState({
       allLocations: locationsData
-    }, () => {
-      console.log(this.state.allLocations)
-    });
+    })
   }
 
   addMarkers() {
@@ -128,10 +126,7 @@ class App extends Component {
     })
     this.setState({
       markers: markersArray
-    }, () => {
-      console.log(markersArray)
-      console.log(this.state.markers)
-    });
+    })
   }
 
   addInfoWindow(marker) {
@@ -160,8 +155,9 @@ class App extends Component {
   updateLocations(updatedLocations) {
     this.setState({
       locations: updatedLocations
-    })
-    this.addMarkers();
+    }, () => {
+      this.addMarkers();
+    });
   }
 
   render() {

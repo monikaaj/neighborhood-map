@@ -33,7 +33,11 @@
 	color: #f2f2f2;
 	list-style-type: none;
 	font-size: 20px;
-	padding: 10px 20px;
+    padding: 20px;
+}
+
+.search-item-name {
+    cursor: pointer;
 }
 
 .button-wrapper {

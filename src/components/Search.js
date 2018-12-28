@@ -79,7 +79,7 @@ class Search extends Component {
           {showingLocations.map((location) => (
             <li key={location.venueId} className="search-item">
               <p 
-                className="search-item"
+                className="search-item-name"
                 onClick = {() => this.onClickLocation(location)}>
                 {location.title}
               </p>

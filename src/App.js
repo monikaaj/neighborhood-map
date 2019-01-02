@@ -136,14 +136,16 @@ class App extends Component {
   }
 
   addInfoWindow(marker) {
+    console.log(marker)
     // add info window content
-    const infowindowContent = `<div>
+    const photo = marker.venueDetails.venue.bestPhoto.prefix + 'width300' + marker.venueDetails.venue.bestPhoto.suffix;
+    const infowindowContent = `<div class="info-window">
       <h4>${marker.title}</h4>
       <p>${marker.venueDetails.venue.location.city}, ${marker.venueDetails.venue.location.state}, ${marker.venueDetails.venue.location.country}</p>
-      <img src=${marker.venueDetails.venue.bestPhoto} width="300" />
-      <p>${marker.venueDetails.venue.rating}</p>
-      <p>${marker.venueDetails.venue.likes.count}</p>
-      <a href="${marker.venueDetails.venue.moreInfo}" target="_blank">More details</a>
+      <img src=${photo} alt="${marker.title}" />
+      <p class="info rating">Rating: ${marker.venueDetails.venue.rating}</p>
+      <p class="info likes">Likes: ${marker.venueDetails.venue.likes.count}</p>
+      <a href="${marker.venueDetails.venue.canonicalUrl}" target="_blank">More details</a>
     </div>`
     var infowindow = new window.google.maps.InfoWindow({
       content: infowindowContent

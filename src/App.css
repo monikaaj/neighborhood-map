@@ -2,6 +2,24 @@
   width: 300px;
 }
 
+.info-window {
+  background-color: #c1c1c1;
+}
+
+.info {
+  padding: 5px 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.likes {
+  color: #8634c1;
+}
+
+.rating {
+  color: #1c73ff;
+}
+
 
 @media screen and (min-width: 800px) {
   .sidebar-button {

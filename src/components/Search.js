@@ -62,7 +62,6 @@ class Search extends Component {
       showingLocations = this.props.allLocations.filter((location) => match.test(location.title));
     }
     else {
-      console.log(this.props.allLocations)
       showingLocations = this.props.allLocations;
     }
     

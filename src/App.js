@@ -43,9 +43,12 @@ class App extends Component {
   }
 
   componentWillReceiveProps({ isScriptLoadSucceed }) {
-    if(isScriptLoadSucceed) {
+    if(isScriptLoadSucceed && typeof window.google === 'object' && typeof window.google.maps === 'object') {
       this.createMap();
       this.getInfoWindowsData();
+    }
+    else {
+      alert('Google Maps did not loaded succesfully :(');
     }
   }
 

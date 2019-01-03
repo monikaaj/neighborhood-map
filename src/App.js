@@ -138,6 +138,7 @@ class App extends Component {
         <p class="info rating">Rating: ${marker.venueDetails.venue.rating}</p>
         <p class="info likes">Likes: ${marker.venueDetails.venue.likes.count}</p>
         <a href="${marker.venueDetails.venue.canonicalUrl}" target="_blank">More details</a>
+        <p>Places info powered by <a href="https://foursquare.com/" target="_blank">Foursquare</a></p>
       </div>`
     }
     else {

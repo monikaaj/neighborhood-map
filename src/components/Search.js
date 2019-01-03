@@ -71,6 +71,8 @@ class Search extends Component {
           <div className="search-locations-input-wrapper">
             <Debounce time='1000' handler="onChange">
               <input
+                name="searchLocation"
+                aria-labelledby='filterLocation'
                 type = "text"
                 placeholder = "Search location"
                 onChange = {(event) => this.updateQuery(event.target.value)}
@@ -83,7 +85,9 @@ class Search extends Component {
             <li key={location.venueId} className="search-item">
               <p 
                 className="search-item-name"
-                onClick = {() => this.onClickLocation(location)}>
+                tabIndex="0"
+                onClick = {() => this.onClickLocation(location)}
+                onKeyPress = {() => this.onClickLocation(location)}>
                 {location.title}
               </p>
             </li>

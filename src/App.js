@@ -43,12 +43,9 @@ class App extends Component {
   }
 
   componentWillReceiveProps({ isScriptLoadSucceed }) {
-    if(isScriptLoadSucceed && typeof window.google === 'object' && typeof window.google.maps === 'object') {
+    if(isScriptLoadSucceed && typeof window.google && typeof window.google.maps) {
       this.createMap();
       this.getInfoWindowsData();
-    }
-    else {
-      alert('Google Maps did not loaded succesfully :(');
     }
   }
 
@@ -59,7 +56,7 @@ class App extends Component {
       mapTypeControl: false
     });
   }
-
+  
   // gets all locations data from foursquare
   getInfoWindowsData() {
     locationsData.forEach((location) => {
@@ -132,7 +129,7 @@ class App extends Component {
   addInfoWindow(marker, open) {
     // add info window content
     let infowindowContent = '';
-    if(marker.venueDetails.venue) {
+    if(marker.venueDetails) {
       const photo = marker.venueDetails.venue.bestPhoto.prefix + 'width300' + marker.venueDetails.venue.bestPhoto.suffix;
       infowindowContent = `<div class="info-window">
         <h4>${marker.title}</h4>

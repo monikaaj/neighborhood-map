@@ -114,6 +114,7 @@ class App extends Component {
         venueId: markersToCreate[i].venueId,
         venueDetails: markersToCreate[i].venueDetails
       });
+      if(markersToCreate.length === 1) this.addInfoWindow(marker, true);
       this.addInfoWindow(marker);
       markersArray.push(marker);
     }
@@ -125,13 +126,11 @@ class App extends Component {
     })
   }
 
-  addInfoWindow(marker) {
+  addInfoWindow(marker, open) {
     // add info window content
-    console.log(marker)
     let infowindowContent = '';
     if(marker.venueDetails.venue) {
       const photo = marker.venueDetails.venue.bestPhoto.prefix + 'width300' + marker.venueDetails.venue.bestPhoto.suffix;
-      console.log(photo)
       infowindowContent = `<div class="info-window">
         <h4>${marker.title}</h4>
         <p>${marker.venueDetails.venue.location.city}, ${marker.venueDetails.venue.location.state}, ${marker.venueDetails.venue.location.country}</p>
@@ -158,6 +157,7 @@ class App extends Component {
       infowindow.open(map, marker);
       setTimeout(function () { infowindow.close(); }, 5000);
     });
+    if (open) infowindow.open(map, marker);
   }
 
   updateLocations(updatedLocations) {
